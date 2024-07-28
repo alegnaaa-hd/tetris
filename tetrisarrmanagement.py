@@ -28,5 +28,3 @@ class Arrmanage():
                 self.checkmove()
 
 f = Arrmanage()
-f.arr[5] = ['X','X','X','X','X','X','X','X','X','X']
-f.checkmove()
