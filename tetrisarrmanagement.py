@@ -90,7 +90,7 @@ class Arrmanage():
                 self.arr[i-1] = [None,None,None,None,None,None,None,None,None,None]
                 self.checkmove()
                 
-    def checkempty(self):
+	def checkempty(self):
         #clears line
         for i in range(1,len(self.arr)):
             if None not in self.arr[i]:
