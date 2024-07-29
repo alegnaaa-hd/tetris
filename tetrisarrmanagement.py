@@ -15,7 +15,7 @@ class Arrmanage():
 
         #init shapes
         
-        xreg = 'X'
+        xreg = 'R'
 
         shape1 = [
             [None,None,None,None]
