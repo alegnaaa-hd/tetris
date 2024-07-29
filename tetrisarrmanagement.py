@@ -63,6 +63,8 @@ class Arrmanage():
         #make initial queue
         for i in range(3):
             self.getpiece()
+	self.transpose(self.queue.dequeue())
+        self.getpiece()
 
     def kill(self):
         pass
