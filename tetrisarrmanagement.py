@@ -144,14 +144,27 @@ class Arrmanage():
 
     def moveleft(self):
         f = False
-        for i in range (19,0,-1):
-            for j in range(10):
+        for i in range (19,-1,-1):
+            for j in range(1,10):
                 if self.arr[i][j] == 'R':
                     if self.arr[i][j-1] == 'X':
                         f=True
         if f == False:
-            for i in range (19,0,-1):
-                for j in range(10):
+            for i in range (19,-1,-1):
+                for j in range(1,10):
+                    if self.arr[i][j] == 'R':
+                        self.arr[i][j-1] = self.arr[i][j]
+                        self.arr[i][j] = None
+    def moveright(self):
+        f = False
+        for i in range (19,-1,-1):
+            for j in range(8,-1,-1):
+                if self.arr[i][j] == 'R':
+                    if self.arr[i][j-1] == 'X':
+                        f=True
+        if f == False:
+            for i in range (19,-1,-1):
+                for j in range(8,-1,-1):
                     if self.arr[i][j] == 'R':
                         self.arr[i][j-1] = self.arr[i][j]
                         self.arr[i][j] = None
