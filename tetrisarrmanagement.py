@@ -73,7 +73,13 @@ class Arrmanage():
         self.queue = Queue()
         for i in range(3):
             self.getpiece()
-        
+
+    def kill(self):
+        pass
+
+    def addpiece(self):
+        pass
+    
     def checkmove(self):
         f = True
         for i in range(1,len(self.arr)):
@@ -130,6 +136,13 @@ class Arrmanage():
                 self.kill()
             self.arr[i][3:6] = shape[i]
 
+    def add_to_board(self):
+        for i in range(20):
+            for j in range(10):
+                if self.arr[i][j] == 'R':
+                    self.arr[i][j] = 'X'
+        self.addpiece()
+    
     def movedown(self):
         #checks if all points in shape can move down
         f = False
