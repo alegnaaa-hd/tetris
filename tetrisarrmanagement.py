@@ -1,5 +1,4 @@
 import random
-from Queue import Queue
 
 class Arrmanage():
     def __init__(self):
@@ -11,7 +10,7 @@ class Arrmanage():
         self.x = 0
         self.y = 0
         self.held_shape = []
-        self.queue = Queue()
+        self.next = []
         #create 2d array
         self.arr = []
         for i in range(20):
@@ -66,15 +65,13 @@ class Arrmanage():
             ]
         self.shapes = [shape1,shape2,shape3,shape4,shape5,shape6,shape7]
         #make initial queue
-        for i in range(3):
-            self.getpiece()
+        self.getpiece()
         self.addpiece()
     def kill(self):
         pass
 
     def addpiece(self):
-        f=self.queue.dequeue()
-        self.transpose(f)
+        self.transpose(self.held_shape)
         self.getpiece()
 		
     def checkmove(self):
@@ -136,7 +133,7 @@ class Arrmanage():
         #chooses random shape and adds it to queue
         p = random.randrange(0,7)
         shape = self.shapes[p]
-        self.queue.inqueue(shape)
+        self.held_shape = shape
 		
     def rotate(self,shape):
 		#rotates a shape
