@@ -3,13 +3,6 @@ from queue import Queue
 
 class Arrmanage():
     def __init__(self):
-
-        #setting up next queue
-        
-        self.queue = Queue()
-        for i in range(3):
-            self.getpiece()
-
         #setting up initial 2d array for board
         
         self.arr = []
@@ -74,6 +67,12 @@ class Arrmanage():
             ]
         
         self.shapes = [shape1,shape2,shape3,shape4,shape5,shape6,shape7]
+
+        #setting up next queue
+        
+        self.queue = Queue()
+        for i in range(3):
+            self.getpiece()
         
     def checkmove(self):
         f = True
@@ -107,5 +106,24 @@ class Arrmanage():
         p = random.randrange(0,7)
         shape = self.shapes[p]
         self.queue.inqueue(shape)
+    
+    def rotate(self,shape):
+        #  ^
+        temp_shape = []
+        for i in range(4):
+            x=[]
+            for j in range(3,-1,-1):
+                x.append(shape[j][i])
+            temp_shape.append(x)
+        return temp_shape
+
+
+
+    def transpose(self,shape):
+        #places shape on top of board
+        for i in range(4):
+            if 'X' in self.arr[3:6]:
+                self.kill()
+            self.arr[i][3:6] = shape[i]
 
 f = Arrmanage()
