@@ -69,14 +69,43 @@ def drawGrid():
 drawGrid()
 
 
-
-
+arr = Arrmanage()
+speed = 30
+i=0
 while True:
-
+    i+=1
    
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    pygame.display.update()
+        elif event.type == pygame.KEYDOWN:
+            f = event.type
+            if f == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
+            elif f == pygame.K_RIGHT:
+                arr.moveright()
+            elif f == pygame.K_LEFT:
+                arr.moveleft()
+            elif f == pygame.K_DOWN:
+                arr.softdrop()
+            elif f == pygame.K_UP:
+                arr.rotate_on_board()
+            elif f == pygame.K_SPACE:
+                arr.drop()
+            elif f == pygame.K_c:
+                arr.arr_hold()
+    if i == 30:
+        arr.movedown()
+        arr.checkempty()
+        if arr.lines >= 10:
+            arr.totallines += arr.lines
+            arr.lines = 0
+            arr.level+=1
+            if speed > 5:
+                speed-=1
+        i=0
+    
 
+    pygame.display.update()
