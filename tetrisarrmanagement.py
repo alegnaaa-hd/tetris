@@ -1,7 +1,14 @@
 import random
+import pygame
+import os
+
 
 class Arrmanage():
     def __init__(self):
+        #sound
+        pygame.mixer.init() 
+        s='Projects/tetris/sound'
+        self.dropsound = pygame.mixer.Sound(os.path.join(s, 'dropsound.ogg'))
         #int values
         self.score = 0
         self.level = 1
@@ -194,6 +201,7 @@ class Arrmanage():
             for j in range(10):
                 if self.arr[i][j] == 'R':
                     self.arr[i][j] = 'X'
+        pygame.mixer.Sound.play(self.dropsound)
         self.addpiece()
 		
     def movedown(self):
