@@ -136,6 +136,10 @@ class Arrmanage():
                 self.kill()
             self.arr[i][3:6] = shape[i]
 
+    def drop(self):
+        if self.movedown() != False:
+            self.drop()
+    
     def add_to_board(self):
         for i in range(20):
             for j in range(10):
