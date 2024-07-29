@@ -126,4 +126,20 @@ class Arrmanage():
                 self.kill()
             self.arr[i][3:6] = shape[i]
 
+    def movedown(self):
+        #checks if all points in shape can move down
+        f = False
+        for i in range (19,-1,-1):
+            for j in range(10):
+                if self.arr[i][j] == 'R':
+                    if self.arr[i+1][j] == 'X':
+                        f=True
+        #moves everything down
+        if f == False:
+            for i in range (19,-1,-1):
+                for j in range(10):
+                    if self.arr[i][j] == 'R':
+                        self.arr[i+1][j] = self.arr[i][j]
+                        self.arr[i][j] = None
+
 f = Arrmanage()
