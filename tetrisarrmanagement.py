@@ -78,7 +78,9 @@ class Arrmanage():
         pass
 
     def addpiece(self):
-        pass
+        f=self.queue.dequeue()
+        self.transpose(f)
+        self.getpiece()
     
     def checkmove(self):
         f = True
