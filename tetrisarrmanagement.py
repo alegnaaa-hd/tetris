@@ -71,7 +71,7 @@ class Arrmanage():
         pass
 
     def addpiece(self):
-        self.transpose(self.held_shape)
+        self.transpose(self.next)
         self.getpiece()
 		
     def checkmove(self):
@@ -133,7 +133,7 @@ class Arrmanage():
         #chooses random shape and adds it to queue
         p = random.randrange(0,7)
         shape = self.shapes[p]
-        self.held_shape = shape
+        self.next = shape
 		
     def rotate(self,shape):
 		#rotates a shape
