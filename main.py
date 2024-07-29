@@ -1,9 +1,13 @@
-# replit file: https://replit.com/@kaylinirishan/Data-Structris#main.py
-
 import pygame, sys
 from pygame.locals import QUIT
+from tetrisarrmanagement import Arrmanage
+import os
 
 pygame.init()
+pygame.mixer.init() 
+s='Projects/tetris/sound'
+backgroundmusic = pygame.mixer.music.load(os.path.join(s,'backgroundmusic2.wav'))
+
 DISPLAYSURF = pygame.display.set_mode((300, 300))
 pygame.display.set_caption('Data Structris')
 
@@ -67,13 +71,13 @@ def drawGrid():
             pygame.draw.rect(screen, "grey", rect, 1)
             
 drawGrid()
-
-
+pygame.mixer.music.play(-1)
 arr = Arrmanage()
 speed = 30
 i=0
 while True:
     i+=1
+    print(i)
    
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -96,7 +100,8 @@ while True:
                 arr.drop()
             elif f == pygame.K_c:
                 arr.arr_hold()
-    if i == 30:
+    if i == 500:
+        print(i)
         arr.movedown()
         arr.checkempty()
         if arr.lines >= 10:
