@@ -3,6 +3,9 @@ from queue import Queue
 
 class Arrmanage():
     def __init__(self):
+        self.queue = Queue()
+        for i in range(3):
+            self.getpiece()
         self.arr = []
         for i in range(20):
             x=[]
@@ -83,5 +86,9 @@ class Arrmanage():
             if None not in self.arr[i]:
                 self.arr[i] = [None,None,None,None,None,None,None,None,None,None]
                 self.checkmove()
+    def getpiece(self):
+        p = random.randrange(0,7)
+        shape = self.shapes[p]
+        self.queue.inqueue(shape)
 
 f = Arrmanage()
