@@ -144,6 +144,10 @@ class Arrmanage():
         self.addpiece()
     
     def movedown(self):
+        for x in range(10):
+            if self.arr[19][x] == 'R':
+                self.add_to_board()
+                return
         #checks if all points in shape can move down
         f = False
         for i in range (19,0,-1):
