@@ -77,7 +77,7 @@ class Arrmanage():
         for i in range(1,len(self.arr)):
             #check if previous is not empty
             x = False
-            f == False:
+            if f == False:
                 x = True
             f = True
             #checks if empty
@@ -90,11 +90,11 @@ class Arrmanage():
                 self.arr[i-1] = [None,None,None,None,None,None,None,None,None,None]
                 self.checkmove()
                 
-	def checkempty(self):
+    def checkempty(self):
         #clears line
         for i in range(1,len(self.arr)):
             if None not in self.arr[i]:
-            	self.arr[i] = [None,None,None,None,None,None,None,None,None,None]
+                self.arr[i] = [None,None,None,None,None,None,None,None,None,None]
                 self.checkmove()
                 
     def getpiece(self):
@@ -158,7 +158,7 @@ class Arrmanage():
                 if self.arr[i][j] == 'R':
                     if self.arr[i+1][j] == 'X':
                         self.add_to_board()
-						f = True
+                        f = True
 		#moves down
         if f == False:
             for i in range (19,0,-1):
