@@ -4,8 +4,13 @@ from Queue import Queue
 class Arrmanage():
     def __init__(self):
         #int values
+        self.score = 0
+        self.level = 1
+        self.totallines = 0
+        self.lines = 0
         self.x = 0
         self.y = 0
+        self.held_shape = []
         self.queue = Queue()
         #create 2d array
         self.arr = []
@@ -63,9 +68,7 @@ class Arrmanage():
         #make initial queue
         for i in range(3):
             self.getpiece()
-	self.transpose(self.queue.dequeue())
-        self.getpiece()
-
+        self.addpiece()
     def kill(self):
         pass
 
@@ -94,10 +97,40 @@ class Arrmanage():
                 
     def checkempty(self):
         #clears line
+        c=0
         for i in range(1,len(self.arr)):
             if None not in self.arr[i]:
+                c+=1
                 self.arr[i] = [None,None,None,None,None,None,None,None,None,None]
+                try:
+                    if None not in self.arr[i+1]:
+                        c+=1
+                        self.arr[i+1] = [None,None,None,None,None,None,None,None,None,None]
+                        try:
+                            if None not in self.arr[i+2]:
+                                c+=1
+                                self.arr[i+2] = [None,None,None,None,None,None,None,None,None,None]
+                                try:
+                                    if None not in self.arr[i+3]:
+                                        c+=1
+                                        self.arr[i+3] = [None,None,None,None,None,None,None,None,None,None]
+                                except:
+                                    pass
+                        except:
+                            pass
+                except:
+                    pass
+                self.lines+=c
+                if c==1:
+                    self.score += 40*self.level
+                if c==2:
+                    self.score += 100*self.level
+                if c==3:
+                    self.score += 300*self.level
+                if c==4:
+                    self.score += 1200*self.level
                 self.checkmove()
+        
                 
     def getpiece(self):
         #chooses random shape and adds it to queue
@@ -124,7 +157,19 @@ class Arrmanage():
             self.arr[i][3:6] = shape[i]
         self.x = 3
         self.y = 0
-		
+	
+    def arr_hold(self):
+        f=[
+            [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2],self.arr[self.y][self.x+3]],
+            [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2],self.arr[self.y+1][self.x+3]],
+            [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2],self.arr[self.y+2][self.x+3]],
+            [self.arr[self.y+3][self.x],self.arr[self.y+3][self.x+1],self.arr[self.y+3][self.x+2],self.arr[self.y+3][self.x+3]]
+        ]
+        if self.held_shape:
+            self.transpose(self.held_shape)
+        else:
+            self.addpiece()
+            
     def transpose_low(self,shape,x,y):
 		#puts shape in board
         for i in range(x,x+4):
@@ -133,12 +178,18 @@ class Arrmanage():
                     if self.arr[i][y+f] == 'X' and shape[i-x][f] == 'R':
 						#stops if impossible
                         return
-            self.arr[i][y:y+3] = shape[i-x]
-			
+            for l in range(4):
+                if self.arr[i][y+l] == 'X':
+                    pass
+                else:
+                    self.arr[i][y+l] = shape[i-x][l]
+	
+    def soft_drop(self):
+        return self.movedown()
     def drop(self):
 		#continually moves down until stops moving
-        if self.movedown() != False:
-            self.drop()
+        while f != False:
+            f= self.soft_drop()
 			
     def add_to_board(self):
 		#adds shape to static values
