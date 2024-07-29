@@ -117,7 +117,11 @@ class Arrmanage():
             temp_shape.append(x)
         return temp_shape
 
-
+    def add_to_board(self):
+        for i in range(20):
+            for j in range(10):
+                if self.arr[i][j] == 'R':
+                    self.arr[i][j] = 'X'
 
     def transpose(self,shape):
         #places shape on top of board
@@ -143,6 +147,9 @@ class Arrmanage():
                         self.arr[i][j] = None
 
     def moveleft(self):
+        for x in range(20):
+            if self.arr[x][0] == 'R':
+                return
         f = False
         for i in range (19,-1,-1):
             for j in range(1,10):
@@ -156,17 +163,20 @@ class Arrmanage():
                         self.arr[i][j-1] = self.arr[i][j]
                         self.arr[i][j] = None
     def moveright(self):
+        for x in range(20):
+            if self.arr[x][9] == 'R':
+                return
         f = False
         for i in range (19,-1,-1):
             for j in range(8,-1,-1):
                 if self.arr[i][j] == 'R':
-                    if self.arr[i][j-1] == 'X':
+                    if self.arr[i][j+1] == 'X':
                         f=True
         if f == False:
             for i in range (19,-1,-1):
                 for j in range(8,-1,-1):
                     if self.arr[i][j] == 'R':
-                        self.arr[i][j-1] = self.arr[i][j]
+                        self.arr[i][j+1] = self.arr[i][j]
                         self.arr[i][j] = None
 
 f = Arrmanage()
