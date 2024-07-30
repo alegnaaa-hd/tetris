@@ -63,7 +63,7 @@ screen.blit(text, (90, 160))
 pygame.draw.rect(screen, "black", pygame.Rect(260, 160, 350, 700))
 
 # grid
-ddef drawGrid(arr):
+def drawGrid(arr):
     blockSize = 35 #Set the size of the grid block
     for x in range(0, 10):
         for y in range(0, 20):
