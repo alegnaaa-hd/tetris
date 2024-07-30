@@ -146,7 +146,6 @@ class Arrmanage():
                 if c==4:
                     self.score += 1200*self.level
                 self.checkmove()
-        
                 
     def getpiece(self):
         #chooses random shape and adds it to queue
