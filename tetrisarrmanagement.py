@@ -113,7 +113,6 @@ class Arrmanage():
         c=0
         for i in range(1,len(self.arr)):
             if None not in self.arr[i]:
-                print("LINE IS EMPTY")
                 c+=1
                 self.arr[i] = [None,None,None,None,None,None,None,None,None,None]
                 try:
@@ -154,13 +153,8 @@ class Arrmanage():
 		
     def rotate(self,shape):
 		#rotates a shape
-        temp_shape = []
-        for i in range(len(shape)):
-            x=[]
-            for j in range(len(shape[i])-1,-1,-1):
-                x.append(shape[j][i])
-            temp_shape.append(x)
-        return temp_shape
+        shape = [[shape[j][i] for j in range(len(shape))] for i in range(len(shape[0])-1,-1,-1)]
+        return shape
 
     def transpose(self,shape):
 		#puts shape at top
@@ -187,19 +181,16 @@ class Arrmanage():
             
     def transpose_low(self,shape,x,y):
 		#puts shape in board
-        for i in range(x,x+4):
-            for x in self.notcolours:
-                if x in self.arr[i][y:y+3]:
-                    for f in range(4):
-                        if self.arr[i][y+f] == x and shape[i-x][f] in self.colours:
-                            #stops if impossible
-                            return
-            for l in range(4):
-                for x in self.notcolours:
-                    if self.arr[i][y+l] == x:
-                        pass
-                    else:
-                        self.arr[i][y+l] = shape[i-x][l]
+        try:
+            for i in range(len(shape)):
+                for p in range(len(shape)):
+                    if self.arr[y+p][i+x] in self.notcolours and shape[p][i] in self.colours:
+                        return
+                for l in range(len(shape)):
+                    if self.arr[y+l][i+x] not in self.notcolours:
+                        self.arr[y+l][x+i] = shape[l][i]
+        except:
+            return
 	
     def soft_drop(self):
         return self.movedown()
@@ -242,7 +233,7 @@ class Arrmanage():
                     if self.arr[i][j] in self.colours:
                         self.arr[i+1][j] = self.arr[i][j]
                         self.arr[i][j] = None
-                        self.y-=1
+            self.y+=1
     
     def moveleft(self):
 		#checks that can move
@@ -263,7 +254,7 @@ class Arrmanage():
                     if self.arr[i][j] in self.colours:
                         self.arr[i][j-1] = self.arr[i][j]
                         self.arr[i][j] = None
-                        self.x-=1
+            self.x-=1
     
     def moveright(self):
 		#checks that can move
@@ -284,16 +275,41 @@ class Arrmanage():
                     if self.arr[i][j] in self.colours:
                         self.arr[i][j+1] = self.arr[i][j]
                         self.arr[i][j] = None
-                        self.x+=1
+            self.x+=1
     
     def rotate_on_board(self):
 		#grabs shape and rotates it
-        f=[
-            [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2],self.arr[self.y][self.x+3]],
-            [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2],self.arr[self.y+1][self.x+3]],
-            [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2],self.arr[self.y+2][self.x+3]],
-            [self.arr[self.y+3][self.x],self.arr[self.y+3][self.x+1],self.arr[self.y+3][self.x+2],self.arr[self.y+3][self.x+3]]
-        ]
+        for x in self.arr:
+            if 'RY' in x:
+                return
+            elif 'RA' in x:
+                try:
+                    f=[
+                        [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2],self.arr[self.y][self.x+3]],
+                        [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2],self.arr[self.y+1][self.x+3]],
+                        [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2],self.arr[self.y+2][self.x+3]],
+                        [self.arr[self.y+3][self.x],self.arr[self.y+3][self.x+1],self.arr[self.y+3][self.x+2],self.arr[self.y+3][self.x+3]]
+                    ]
+                    break
+                except:
+                    return
+            else:
+                try:
+                    f=[
+                        [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2]],
+                        [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2]],
+                        [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2]]
+                    ]
+                    break
+                except:
+                    try:
+                        f=[
+                        [self.arr[self.y][self.x],self.arr[self.y][self.x+1],None],
+                        [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],None],
+                        [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],None]
+                    ]
+                    except:
+                        return
         f=self.rotate(f)
-		#places back on board
+        #places back on board
         self.transpose_low(f,self.x,self.y)
