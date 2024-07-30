@@ -26,7 +26,7 @@ class Arrmanage():
                 l.append(None)
             self.arr.append(l)
         #setup shapes
-        xreg = 'R'
+        xreg = 'RA'
         shape1 = [
             [xreg,xreg,xreg,xreg],
             [None,None,None,None],
@@ -34,42 +34,50 @@ class Arrmanage():
             [None,None,None,None]
 
             ]
+        xreg = 'RB'
         shape2 = [
             [xreg,None,None,None],
             [xreg,xreg,xreg,None],
             [None,None,None,None],
             [None,None,None,None]
             ]
+        xreg = 'RO'
         shape3 = [
+            [None,None,None,xreg],
+            [None,xreg,xreg,xreg],
             [None,None,None,None],
-            [None,None,None,None],
-            [None,None,xreg,None],
-            [xreg,xreg,xreg,None]
+            [None,None,None,None]
             ]
+        xreg = 'RY'
         shape4 = [
+            [None,xreg,xreg,None],
+            [None,xreg,xreg,None],
             [None,None,None,None],
-            [None,None,None,None],
-            [xreg,xreg,None,None],
-            [xreg,xreg,None,None]
+            [None,None,None,None]
+            
             ]
+        xreg = 'RG'
         shape5 = [
             [None,xreg,xreg,None],
             [xreg,xreg,None,None],
             [None,None,None,None],
             [None,None,None,None]
             ]
+        xreg = 'RP'
         shape6 = [
             [None,xreg,None,None],
             [xreg,xreg,xreg,None],
             [None,None,None,None],
             [None,None,None,None]
             ]
+        xreg = 'RR'
         shape7 = [
             [xreg,xreg,None,None],
             [None,xreg,xreg,None],
             [None,None,None,None],
             [None,None,None,None]
             ]
+        self.colours = ['RA','RB','RO','RY','RG','RP','RR']
         self.shapes = [shape1,shape2,shape3,shape4,shape5,shape6,shape7]
         #make initial queue
         self.getpiece()
@@ -155,7 +163,7 @@ class Arrmanage():
     def transpose(self,shape):
 		#puts shape at top
         for i in range(2):
-            if 'X' in self.arr[i][3:6]:
+            if 'X' in self.arr[i+1][3:6]:
 				#kills if already at top
                 self.kill()
             self.arr[i][3:6] = shape[i]
@@ -179,7 +187,7 @@ class Arrmanage():
         for i in range(x,x+4):
             if 'X' in self.arr[i][y:y+3]:
                 for f in range(4):
-                    if self.arr[i][y+f] == 'X' and shape[i-x][f] == 'R':
+                    if self.arr[i][y+f] == 'X' and shape[i-x][f] in self.colours:
 						#stops if impossible
                         return
             for l in range(4):
@@ -192,6 +200,7 @@ class Arrmanage():
         return self.movedown()
     def drop(self):
 		#continually moves down until stops moving
+        f=True
         while f != False:
             f= self.soft_drop()
 			
@@ -199,29 +208,31 @@ class Arrmanage():
 		#adds shape to static values
         for i in range(20):
             for j in range(10):
-                if self.arr[i][j] == 'R':
-                    self.arr[i][j] = 'X'
+                if self.arr[i][j] in self.colours:
+                    f = self.arr[i][j]
+                    f = f[1]
+                    self.arr[i][j] = f
         pygame.mixer.Sound.play(self.dropsound)
         self.addpiece()
 		
     def movedown(self):
 		#checks that can move down
         for x in range(10):
-            if self.arr[19][x] == 'R':
+            if self.arr[19][x] in self.colours:
                 self.add_to_board()
                 return False
         f = False
-        for i in range (19,0,-1):
+        for i in range (19,-1,-1):
             for j in range(10):
-                if self.arr[i][j] == 'R':
+                if self.arr[i][j] in self.colours:
                     if self.arr[i+1][j] == 'X':
                         self.add_to_board()
                         f = True
 		#moves down
         if f == False:
-            for i in range (19,0,-1):
+            for i in range (19,-1,-1):
                 for j in range(10):
-                    if self.arr[i][j] == 'R':
+                    if self.arr[i][j] in self.colours:
                         self.arr[i+1][j] = self.arr[i][j]
                         self.arr[i][j] = None
                         self.y-=1
@@ -230,18 +241,18 @@ class Arrmanage():
 		#checks that can move
         f = False
         for x in range(20):
-            if self.arr[x][0] == 'R':
+            if self.arr[x][0] in self.colours:
                 return
         for i in range (19,-1,-1):
             for j in range(1,10):
-                if self.arr[i][j] == 'R':
+                if self.arr[i][j] in self.colours:
                     if self.arr[i][j-1] == 'X':
                         f=True
         if f == False:
 			#moves
             for i in range (19,-1,-1):
                 for j in range(1,10):
-                    if self.arr[i][j] == 'R':
+                    if self.arr[i][j] in self.colours:
                         self.arr[i][j-1] = self.arr[i][j]
                         self.arr[i][j] = None
                         self.x-=1
@@ -250,18 +261,18 @@ class Arrmanage():
 		#checks that can move
         f = False
         for x in range(20):
-            if self.arr[x][9] == 'R':
+            if self.arr[x][9] in self.colours:
                 return
         for i in range (19,-1,-1):
             for j in range(8,-1,-1):
-                if self.arr[i][j] == 'R':
+                if self.arr[i][j] in self.colours:
                     if self.arr[i][j+1] == 'X':
                         f=True
         if f == False:
 			#moves
             for i in range (19,-1,-1):
                 for j in range(8,-1,-1):
-                    if self.arr[i][j] == 'R':
+                    if self.arr[i][j] in self.colours:
                         self.arr[i][j+1] = self.arr[i][j]
                         self.arr[i][j] = None
                         self.x+=1
