@@ -78,6 +78,7 @@ class Arrmanage():
             [None,None,None,None]
             ]
         self.colours = ['RA','RB','RO','RY','RG','RP','RR']
+        self.notcolours = ['A','B','O','Y','G','P','R']
         self.shapes = [shape1,shape2,shape3,shape4,shape5,shape6,shape7]
         #make initial queue
         self.getpiece()
@@ -112,6 +113,7 @@ class Arrmanage():
         c=0
         for i in range(1,len(self.arr)):
             if None not in self.arr[i]:
+                print("LINE IS EMPTY")
                 c+=1
                 self.arr[i] = [None,None,None,None,None,None,None,None,None,None]
                 try:
@@ -163,9 +165,10 @@ class Arrmanage():
     def transpose(self,shape):
 		#puts shape at top
         for i in range(2):
-            if 'X' in self.arr[i+1][3:6]:
-				#kills if already at top
-                self.kill()
+            for x in self.notcolours:
+                if x in self.arr[i+1][3:6]:
+                    #kills if already at top
+                    self.kill()
             self.arr[i][3:6] = shape[i]
         self.x = 3
         self.y = 0
@@ -185,16 +188,18 @@ class Arrmanage():
     def transpose_low(self,shape,x,y):
 		#puts shape in board
         for i in range(x,x+4):
-            if 'X' in self.arr[i][y:y+3]:
-                for f in range(4):
-                    if self.arr[i][y+f] == 'X' and shape[i-x][f] in self.colours:
-						#stops if impossible
-                        return
+            for x in self.notcolours:
+                if x in self.arr[i][y:y+3]:
+                    for f in range(4):
+                        if self.arr[i][y+f] == x and shape[i-x][f] in self.colours:
+                            #stops if impossible
+                            return
             for l in range(4):
-                if self.arr[i][y+l] == 'X':
-                    pass
-                else:
-                    self.arr[i][y+l] = shape[i-x][l]
+                for x in self.notcolours:
+                    if self.arr[i][y+l] == x:
+                        pass
+                    else:
+                        self.arr[i][y+l] = shape[i-x][l]
 	
     def soft_drop(self):
         return self.movedown()
@@ -214,6 +219,7 @@ class Arrmanage():
                     self.arr[i][j] = f
         pygame.mixer.Sound.play(self.dropsound)
         self.addpiece()
+        self.checkempty()
 		
     def movedown(self):
 		#checks that can move down
@@ -225,9 +231,10 @@ class Arrmanage():
         for i in range (19,-1,-1):
             for j in range(10):
                 if self.arr[i][j] in self.colours:
-                    if self.arr[i+1][j] == 'X':
-                        self.add_to_board()
-                        f = True
+                    for x in self.notcolours:
+                        if self.arr[i+1][j] == x:
+                            self.add_to_board()
+                            return False
 		#moves down
         if f == False:
             for i in range (19,-1,-1):
@@ -246,8 +253,9 @@ class Arrmanage():
         for i in range (19,-1,-1):
             for j in range(1,10):
                 if self.arr[i][j] in self.colours:
-                    if self.arr[i][j-1] == 'X':
-                        f=True
+                    for x in self.notcolours:
+                        if self.arr[i][j-1] == x:
+                            f=True
         if f == False:
 			#moves
             for i in range (19,-1,-1):
@@ -266,8 +274,9 @@ class Arrmanage():
         for i in range (19,-1,-1):
             for j in range(8,-1,-1):
                 if self.arr[i][j] in self.colours:
-                    if self.arr[i][j+1] == 'X':
-                        f=True
+                    for x in self.notcolours:
+                        if self.arr[i][j+1] == x:
+                            f=True
         if f == False:
 			#moves
             for i in range (19,-1,-1):
