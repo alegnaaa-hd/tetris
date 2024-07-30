@@ -63,28 +63,46 @@ screen.blit(text, (90, 160))
 pygame.draw.rect(screen, "black", pygame.Rect(260, 160, 350, 700))
 
 # grid
-def drawGrid():
+def drawGrid(arr):
     blockSize = 35 #Set the size of the grid block
-    for x in range(0, 330, blockSize):
-        for y in range(0, 680, blockSize):
-            rect = pygame.Rect(260+x, 160+y, blockSize, blockSize)
-            pygame.draw.rect(screen, "grey", rect, 1)
+    for x in range(0, 10):
+        for y in range(0, 20):
+            f = arr[y][x]
+            if f == None:
+                colour = 'grey'
+            else:
+                if len(f) == 2:
+                    f = f[1]
+            if f == 'A':
+                colour = 'aqua'
+            elif f == 'B':
+                colour = 'blue'
+            elif f == 'O':
+                colour = 'orange'
+            elif f == 'Y':
+                colour = 'yellow'
+            elif f == 'G':
+                colour = 'green'
+            elif f == 'P':
+                colour = 'purple'
+            elif f == 'R':
+                colour = 'red'
+            rect = pygame.Rect(260+x*blockSize, 160+y*blockSize, blockSize, blockSize)
+            pygame.draw.rect(screen, colour, rect, 1)
             
-drawGrid()
 pygame.mixer.music.play(-1)
 arr = Arrmanage()
+drawGrid(arr.arr)
 speed = 30
 i=0
 while True:
-    i+=1
-    print(i)
    
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            f = event.type
+            f = event.key
             if f == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
@@ -93,7 +111,7 @@ while True:
             elif f == pygame.K_LEFT:
                 arr.moveleft()
             elif f == pygame.K_DOWN:
-                arr.softdrop()
+                arr.soft_drop()
             elif f == pygame.K_UP:
                 arr.rotate_on_board()
             elif f == pygame.K_SPACE:
@@ -111,154 +129,5 @@ while True:
                 speed-=1
         i=0
     
-
+    drawGrid(arr.arr)
     pygame.display.update()
-
-import pygame
-import button
-from pygame.locals import QUIT
-
-pygame.init()
-
-screen = pygame.display.set_mode((880, 1000))
-pygame.display.set_caption ("Menu")
-
-# game variables
-game_paused = False
-menu_state = "main"
-
-# fonts
-font = pygame.font.SysFont("timesnewroman", 50)
-
-#define colours
-TEXT_COL = (255, 255, 255)
-
-# button images
-resume_img = pygame.image.load("button_resume.png").convert_alpha()
-
-# button instances
-resume_button = button.Button(304, 125, resume_img, 1)
-
-def draw_text(text, font, text_col, x, y):
-  img = font.render(text, True, text_col)
-  screen.blit(img, (x, y))
-
-#game loop
-run = True
-while run:
-
-  screen.fill((52, 78, 91))
-
-  #check if game is paused
-  if game_paused == True:
-    #check menu state
-    if menu_state == "main":
-      #draw pause screen buttons
-      if resume_button.draw(screen):
-        game_paused = False
-        
-  else:
-    draw_text("Press SPACE to pause", font, TEXT_COL, 160, 250)
-
-  #event handler
-  for event in pygame.event.get():
-    if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_SPACE:
-        game_paused = True
-    if event.type == pygame.QUIT:
-      run = False
-
-  pygame.display.update()
-
-pygame.quit()
-
-''' CODE FROM VIDEO: 
-
-import pygame
-import button
-
-pygame.init()
-
-#create game window
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Main Menu")
-
-#game variables
-game_paused = False
-menu_state = "main"
-
-#define fonts
-font = pygame.font.SysFont("arialblack", 40)
-
-#define colours
-TEXT_COL = (255, 255, 255)
-
-#load button images
-resume_img = pygame.image.load("images/button_resume.png").convert_alpha()
-options_img = pygame.image.load("images/button_options.png").convert_alpha()
-quit_img = pygame.image.load("images/button_quit.png").convert_alpha()
-video_img = pygame.image.load('images/button_video.png').convert_alpha()
-audio_img = pygame.image.load('images/button_audio.png').convert_alpha()
-keys_img = pygame.image.load('images/button_keys.png').convert_alpha()
-back_img = pygame.image.load('images/button_back.png').convert_alpha()
-
-#create button instances
-resume_button = button.Button(304, 125, resume_img, 1)
-options_button = button.Button(297, 250, options_img, 1)
-quit_button = button.Button(336, 375, quit_img, 1)
-video_button = button.Button(226, 75, video_img, 1)
-audio_button = button.Button(225, 200, audio_img, 1)
-keys_button = button.Button(246, 325, keys_img, 1)
-back_button = button.Button(332, 450, back_img, 1)
-
-def draw_text(text, font, text_col, x, y):
-  img = font.render(text, True, text_col)
-  screen.blit(img, (x, y))
-
-#game loop
-run = True
-while run:
-
-  screen.fill((52, 78, 91))
-
-  #check if game is paused
-  if game_paused == True:
-    #check menu state
-    if menu_state == "main":
-      #draw pause screen buttons
-      if resume_button.draw(screen):
-        game_paused = False
-      if options_button.draw(screen):
-        menu_state = "options"
-      if quit_button.draw(screen):
-        run = False
-    #check if the options menu is open
-    if menu_state == "options":
-      #draw the different options buttons
-      if video_button.draw(screen):
-        print("Video Settings")
-      if audio_button.draw(screen):
-        print("Audio Settings")
-      if keys_button.draw(screen):
-        print("Change Key Bindings")
-      if back_button.draw(screen):
-        menu_state = "main"
-  else:
-    draw_text("Press SPACE to pause", font, TEXT_COL, 160, 250)
-
-  #event handler
-  for event in pygame.event.get():
-    if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_SPACE:
-        game_paused = True
-    if event.type == pygame.QUIT:
-      run = False
-
-  pygame.display.update()
-
-pygame.quit()
-
-'''
