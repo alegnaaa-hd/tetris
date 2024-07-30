@@ -63,32 +63,37 @@ screen.blit(text, (90, 160))
 pygame.draw.rect(screen, "black", pygame.Rect(260, 160, 350, 700))
 
 # grid
-def drawGrid(arr):
+ddef drawGrid(arr):
     blockSize = 35 #Set the size of the grid block
     for x in range(0, 10):
         for y in range(0, 20):
             f = arr[y][x]
+            p = 0
             if f == None:
                 colour = 'grey'
+                rect = pygame.Rect(260+x*blockSize, 160+y*blockSize, blockSize, blockSize)
+                pygame.draw.rect(screen, 'black', rect)
+                pygame.draw.rect(screen, colour, rect, 1)
             else:
                 if len(f) == 2:
                     f = f[1]
-            if f == 'A':
-                colour = 'aqua'
-            elif f == 'B':
-                colour = 'blue'
-            elif f == 'O':
-                colour = 'orange'
-            elif f == 'Y':
-                colour = 'yellow'
-            elif f == 'G':
-                colour = 'green'
-            elif f == 'P':
-                colour = 'purple'
-            elif f == 'R':
-                colour = 'red'
-            rect = pygame.Rect(260+x*blockSize, 160+y*blockSize, blockSize, blockSize)
-            pygame.draw.rect(screen, colour, rect, 1)
+                if f == 'A':
+                    colour = 'aqua'
+                elif f == 'B':
+                    colour = 'blue'
+                elif f == 'O':
+                    colour = 'orange'
+                elif f == 'Y':
+                    colour = 'yellow'
+                elif f == 'G':
+                    colour = 'green'
+                elif f == 'P':
+                    colour = 'purple'
+                elif f == 'R':
+                    colour = 'red'
+                rect = pygame.Rect(260+x*blockSize, 160+y*blockSize, blockSize, blockSize)
+                pygame.draw.rect(screen, colour, rect, p)
+                pygame.draw.rect(screen, 'grey', rect, 1)
             
 pygame.mixer.music.play(-1)
 arr = Arrmanage()
