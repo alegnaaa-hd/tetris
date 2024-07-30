@@ -96,7 +96,7 @@ drawGrid(arr.arr)
 speed = 30
 i=0
 while True:
-   
+    i+=1
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -128,6 +128,5 @@ while True:
             if speed > 5:
                 speed-=1
         i=0
-    
     drawGrid(arr.arr)
     pygame.display.update()
