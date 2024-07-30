@@ -80,6 +80,7 @@ class Arrmanage():
         self.colours = ['RA','RB','RO','RY','RG','RP','RR']
         self.notcolours = ['A','B','O','Y','G','P','R']
         self.shapes = [shape1,shape2,shape3,shape4,shape5,shape6,shape7]
+        self.used = []
         #make initial queue
         self.getpiece()
         self.addpiece()
@@ -88,6 +89,8 @@ class Arrmanage():
 
     def addpiece(self):
         self.transpose(self.next)
+        if 'RO' in self.arr[0]:
+            self.x+=1
         self.getpiece()
 		
     def checkmove(self):
@@ -149,7 +152,13 @@ class Arrmanage():
         #chooses random shape and adds it to queue
         p = random.randrange(0,7)
         shape = self.shapes[p]
+        if shape in self.used:
+            self.getpiece()
+            return
         self.next = shape
+        self.used.append(shape)
+        if len(self.used) == 7:
+            self.used = []
 		
     def rotate(self,shape):
 		#rotates a shape
@@ -280,36 +289,46 @@ class Arrmanage():
     def rotate_on_board(self):
 		#grabs shape and rotates it
         for x in self.arr:
-            if 'RY' in x:
-                return
-            elif 'RA' in x:
-                try:
-                    f=[
-                        [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2],self.arr[self.y][self.x+3]],
-                        [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2],self.arr[self.y+1][self.x+3]],
-                        [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2],self.arr[self.y+2][self.x+3]],
-                        [self.arr[self.y+3][self.x],self.arr[self.y+3][self.x+1],self.arr[self.y+3][self.x+2],self.arr[self.y+3][self.x+3]]
-                    ]
-                    break
-                except:
-                    return
-            else:
-                try:
-                    f=[
-                        [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2]],
-                        [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2]],
-                        [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2]]
-                    ]
-                    break
-                except:
-                    try:
-                        f=[
-                        [self.arr[self.y][self.x],self.arr[self.y][self.x+1],None],
-                        [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],None],
-                        [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],None]
-                    ]
-                    except:
+            for l in x:
+                if l in self.colours:
+                    if 'RY' in x:
                         return
-        f=self.rotate(f)
-        #places back on board
-        self.transpose_low(f,self.x,self.y)
+                    elif 'RA' in x:
+                        try:
+                            f=[
+                                [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2],self.arr[self.y][self.x+3]],
+                                [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2],self.arr[self.y+1][self.x+3]],
+                                [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2],self.arr[self.y+2][self.x+3]],
+                                [self.arr[self.y+3][self.x],self.arr[self.y+3][self.x+1],self.arr[self.y+3][self.x+2],self.arr[self.y+3][self.x+3]]
+                            ]
+                            if f[1][0] == 'RA':
+                                f =[
+                                    ['RA','RA','RA','RA'],
+                                    [None,None,None,None],
+                                    [None,None,None,None],
+                                    [None,None,None,None]
+                                ]
+                            else:
+                                f=[
+                                    ['RA',None,None,None],
+                                    ["RA",None,None,None],
+                                    ["RA",None,None,None],
+                                    ["RA",None,None,None]
+                                ]
+                            self.transpose_low(f,self.x,self.y)
+                            return
+                        except:
+                            return
+                    else:
+                        try:
+                            f=[
+                                [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2]],
+                                [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2]],
+                                [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2]]
+                            ]
+                            f=self.rotate(f)
+                            #places back on board
+                            self.transpose_low(f,self.x,self.y)
+                            return
+                        except:
+                            return
