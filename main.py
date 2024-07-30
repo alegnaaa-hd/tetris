@@ -118,7 +118,7 @@ while True:
                 arr.drop()
             elif f == pygame.K_c:
                 arr.arr_hold()
-    if i == 500:
+    if i == 500-10*speed:
         arr.movedown()
         arr.checkempty()
         if arr.lines >= 10:
