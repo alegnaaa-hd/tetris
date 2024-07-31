@@ -2,11 +2,11 @@ import pygame, sys
 import button
 from pygame.locals import QUIT
 from settings import setting
-from pygame_widgets.slider import Slider
 from play import playy
 from credits import credits
-#setting()
-#credits()
+from game_over import game_over
+
+
 def main_menu():
   pygame.init()
 
@@ -16,9 +16,14 @@ def main_menu():
   #main data structris label
   pygame.draw.rect(screen, "lightblue", pygame.Rect(30, 30, 810, 100))
 
-  font = pygame.font.SysFont("timesnewroman", 36)
-  text_b = font.render("Welcome to Data Structris!", True, "black")
-  screen.blit(text_b, (230, 60))
+
+  font_path = 'fonts.ttf'
+  font_size = 40
+  game_font = pygame.font.Font(font_path, font_size) 
+  
+  # font = pygame.font.SysFont("timesnewroman", 36)
+  text_b = game_font.render("Welcome to Data Structris!", True, "black")
+  screen.blit(text_b, (60, 60))
 
   #play button on menu screen
   play_img = pygame.image.load("images/button_play.png").convert_alpha()
@@ -56,6 +61,9 @@ def main_menu():
                 credits()
               if y > 450 and y < 550:
                 setting()
+                # testing for game over screen is below 
+              if y > 550:
+                game_over()
           elif event.type == QUIT:
               pygame.quit()
               sys.exit()
