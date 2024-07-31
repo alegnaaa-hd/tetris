@@ -1,9 +1,10 @@
-import pygame
+import pygame,sys
 import button
 from pygame.locals import QUIT
 import webbrowser
 
-def credits():
+
+def credits(arr):
   from main import main_menu
   pygame.init()
   screen = pygame.display.set_mode((880, 1000))
@@ -11,7 +12,7 @@ def credits():
   #Bigfont = pygame.font.SysFont("timesnewroman", 36)
   #font = pygame.font.SysFont("timesnewroman", 25)
 
-  font_path = 'fonts.ttf'
+  font_path = 'Projects/tetris/fonts.ttf'
 
   Big_game_font = pygame.font.Font(font_path, 40) 
   game_font = pygame.font.Font(font_path, 20)
@@ -66,7 +67,7 @@ def credits():
   screen.blit(description4_text, (35, 560))
   
   # back button
-  back_img = pygame.image.load("images/button_back.png").convert_alpha()
+  back_img = pygame.image.load("Projects/tetris/buttons/button_back.png").convert_alpha()
   back_button = button.Button(290, 620, back_img, 0.25)
   back_button.draw(screen)
 
@@ -90,7 +91,7 @@ def credits():
             # back button
             if x > 290 and x < 580:
               if y > 620 and y < 715:
-                main_menu()
+                main_menu(arr)
                 
         elif event.type == QUIT:
             pygame.quit()
