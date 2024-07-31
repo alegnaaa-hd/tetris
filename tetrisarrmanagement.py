@@ -84,11 +84,10 @@ class Arrmanage():
         #make initial queue
         self.getpiece()
         self.addpiece()
-    def kill(self):
-        pass
 
     def addpiece(self):
-        self.transpose(self.next)
+        if self.transpose(self.next) == 'DEAD':
+            return 'DEAD'
         if 'RO' in self.arr[0]:
             self.x+=1
         self.getpiece()
@@ -165,27 +164,115 @@ class Arrmanage():
         return shape
 
     def transpose(self,shape):
+        #remove lines previous
+        for i in range(20):
+            for j in range(10):
+                if self.arr[i][j] in self.colours:
+                    self.arr[i][j] = None
 		#puts shape at top
         for i in range(2):
             for x in self.notcolours:
                 if x in self.arr[i+1][3:6]:
                     #kills if already at top
-                    self.kill()
+                    return 'DEAD'
             self.arr[i][3:6] = shape[i]
         self.x = 3
         self.y = 0
+        f=True
+        for i in range(4,20):
+            for j in self.arr[i]:
+                if j in self.colours:
+                    f = False
+        if f==False:
+            for i in range(20):
+                for j in range(10):
+                    if self.arr[i][j] in self.colours:
+                        self.arr[i][j] = None
+            self.used = self.used[0:len(self.used)-1]
+            self.getpiece()
+            self.addpiece()
 	
     def arr_hold(self):
-        f=[
-            [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2],self.arr[self.y][self.x+3]],
-            [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2],self.arr[self.y+1][self.x+3]],
-            [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2],self.arr[self.y+2][self.x+3]],
-            [self.arr[self.y+3][self.x],self.arr[self.y+3][self.x+1],self.arr[self.y+3][self.x+2],self.arr[self.y+3][self.x+3]]
-        ]
+        for x in self.arr:
+            for l in x:
+                if l in self.colours:
+                    try:
+                        f=[
+                                [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2],self.arr[self.y][self.x+3]],
+                                [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2],self.arr[self.y+1][self.x+3]],
+                                [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2],self.arr[self.y+2][self.x+3]],
+                                [self.arr[self.y+3][self.x],self.arr[self.y+3][self.x+1],self.arr[self.y+3][self.x+2],self.arr[self.y+3][self.x+3]]
+                            ]
+                    except:
+                        try:
+                            f=[
+                                [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2]],
+                                [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2]],
+                                [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2]]
+                            ]
+                        except:
+                            pass
+        m = False
+        for w in f:
+            if m == False:
+                for o in w:
+                    if o in self.colours:
+                        if o == 'RA':
+                            f = [
+                                [o,o,o,o],
+                                [None,None,None,None],
+                                [None,None,None,None],
+                                [None,None,None,None]
+
+                                ]
+                        elif o == 'RB':
+                            f = [
+                                [o,None,None,None],
+                                [o,o,o,None],
+                                [None,None,None,None],
+                                [None,None,None,None]
+                                ]
+                        elif o == 'RO':
+                            f = [
+                                [None,None,None,o],
+                                [None,o,o,o],
+                                [None,None,None,None],
+                                [None,None,None,None]
+                                ]
+                        elif o == 'RY':
+                            f = [
+                                [None,o,o,None],
+                                [None,o,o,None],
+                                [None,None,None,None],
+                                [None,None,None,None]
+                                
+                                ]
+                        elif o == 'RG':
+                            f = [
+                                [None,o,o,None],
+                                [o,o,None,None],
+                                [None,None,None,None],
+                                [None,None,None,None]
+                                ]
+                        elif o == 'RP':
+                            f = [
+                                [None,o,None,None],
+                                [o,o,o,None],
+                                [None,None,None,None],
+                                [None,None,None,None]
+                                ]
+                        elif o == 'RR':
+                            f = [
+                                [o,o,None,None],
+                                [None,o,o,None],
+                                [None,None,None,None],
+                                [None,None,None,None]
+                                ]
         if self.held_shape:
             self.transpose(self.held_shape)
         else:
             self.addpiece()
+        self.held_shape = f
             
     def transpose_low(self,shape,x,y):
 		#puts shape in board
@@ -207,6 +294,8 @@ class Arrmanage():
         f=True
         while f != False:
             f= self.soft_drop()
+            if f == 'DEAD':
+                return 'DEAD'
 			
     def add_to_board(self):
 		#adds shape to static values
@@ -217,14 +306,16 @@ class Arrmanage():
                     f = f[1]
                     self.arr[i][j] = f
         pygame.mixer.Sound.play(self.dropsound)
-        self.addpiece()
         self.checkempty()
+        if self.addpiece() == 'DEAD':
+            return 'DEAD'
 		
     def movedown(self):
 		#checks that can move down
         for x in range(10):
             if self.arr[19][x] in self.colours:
-                self.add_to_board()
+                if self.add_to_board() == 'DEAD':
+                    return 'DEAD'
                 return False
         f = False
         for i in range (19,-1,-1):
@@ -232,7 +323,8 @@ class Arrmanage():
                 if self.arr[i][j] in self.colours:
                     for x in self.notcolours:
                         if self.arr[i+1][j] == x:
-                            self.add_to_board()
+                            if self.add_to_board() == 'DEAD':
+                                return 'DEAD'
                             return False
 		#moves down
         if f == False:
