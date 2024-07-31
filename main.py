@@ -2,12 +2,13 @@ import pygame, sys
 import button
 from pygame.locals import QUIT
 from settings import setting
+from pygame_widgets.slider import Slider
 from play import playy
 from credits import credits
-from game_over import game_over
-
-
-def main_menu():
+from tetrisarrmanagement import Arrmanage
+#setting()
+#credits()
+def main_menu(arr):
   pygame.init()
 
   screen = pygame.display.set_mode((880, 1000))
@@ -16,24 +17,20 @@ def main_menu():
   #main data structris label
   pygame.draw.rect(screen, "lightblue", pygame.Rect(30, 30, 810, 100))
 
-
-  font_path = 'fonts.ttf'
-  font_size = 40
-  game_font = pygame.font.Font(font_path, font_size) 
-  
-  # font = pygame.font.SysFont("timesnewroman", 36)
-  text_b = game_font.render("Welcome to Data Structris!", True, "black")
-  screen.blit(text_b, (60, 60))
+  font = pygame.font.SysFont("timesnewroman", 36)
+  text_b = font.render("Welcome to Data Structris!", True, "black")
+  screen.blit(text_b, (230, 60))
 
   #play button on menu screen
-  play_img = pygame.image.load("images/button_play.png").convert_alpha()
+  
+  play_img = pygame.image.load("Projects/tetris/buttons/button_play.png").convert_alpha()
 
   play_button = button.Button(290, 250, play_img, 0.25)
 
   play_button.draw(screen)
 
   #credits button on menu screen
-  credits_img = pygame.image.load("images/button_credits.png").convert_alpha()
+  credits_img = pygame.image.load("Projects/tetris/buttons/button_credits.png").convert_alpha()
 
   credits_button = button.Button(290, 350, credits_img, 0.25)
 
@@ -41,7 +38,7 @@ def main_menu():
 
   #settings button on menu screen
 
-  settings_img = pygame.image.load("images/button_settings.png").convert_alpha()
+  settings_img = pygame.image.load("Projects/tetris/buttons/button_settings.png").convert_alpha()
 
   settings_button = button.Button(290, 450, settings_img, 0.25)
 
@@ -53,21 +50,18 @@ def main_menu():
 
           if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
-            print(f'{x}, {y}')
             if x>297 and x<578:
               if y > 256 and y < 337:
-                playy()
+                playy(arr)
               if y > 290 and y < 440:
-                credits()
+                credits(arr)
               if y > 450 and y < 550:
-                setting()
-                # testing for game over screen is below 
-              if y > 550:
-                game_over()
+                setting(arr)
           elif event.type == QUIT:
               pygame.quit()
               sys.exit()
 
       pygame.display.update()
-    
-main_menu()
+
+arr = Arrmanage()
+main_menu(arr)
