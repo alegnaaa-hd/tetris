@@ -19,8 +19,12 @@ def main_menu(arr):
   #main data structris label
   pygame.draw.rect(screen, "lightblue", pygame.Rect(30, 30, 810, 100))
 
-  font = pygame.font.SysFont("timesnewroman", 36)
-  text_b = font.render("Welcome to Data Structris!", True, "black")
+  # font
+  font_path = 'fonts.ttf'
+  font_size = 40
+  game_font = pygame.font.Font(font_path, font_size) 
+  
+  text_b = game_font.render("Welcome to Data Structris!", True, "black")
   screen.blit(text_b, (230, 60))
 
   #play button on menu screen
