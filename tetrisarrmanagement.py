@@ -196,6 +196,7 @@ class Arrmanage():
             self.addpiece()
 	
     def arr_hold(self):
+        f=None
         for x in self.arr:
             for l in x:
                 if l in self.colours:
