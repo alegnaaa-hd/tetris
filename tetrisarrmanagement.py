@@ -176,8 +176,11 @@ class Arrmanage():
                     #kills if already at top
                     return 'DEAD'
             self.arr[i][3:6] = shape[i]
+    
         self.x = 3
         self.y = 0
+        if 'RO' in shape[0]:
+            self.x+=1
         f=True
         for i in range(4,20):
             for j in self.arr[i]:
@@ -213,66 +216,67 @@ class Arrmanage():
                         except:
                             pass
         m = False
-        for w in f:
-            if m == False:
-                for o in w:
-                    if o in self.colours:
-                        if o == 'RA':
-                            f = [
-                                [o,o,o,o],
-                                [None,None,None,None],
-                                [None,None,None,None],
-                                [None,None,None,None]
+        if f:
+            for w in f:
+                if m == False:
+                    for o in w:
+                        if o in self.colours:
+                            if o == 'RA':
+                                f = [
+                                    [o,o,o,o],
+                                    [None,None,None,None],
+                                    [None,None,None,None],
+                                    [None,None,None,None]
 
-                                ]
-                        elif o == 'RB':
-                            f = [
-                                [o,None,None,None],
-                                [o,o,o,None],
-                                [None,None,None,None],
-                                [None,None,None,None]
-                                ]
-                        elif o == 'RO':
-                            f = [
-                                [None,None,None,o],
-                                [None,o,o,o],
-                                [None,None,None,None],
-                                [None,None,None,None]
-                                ]
-                        elif o == 'RY':
-                            f = [
-                                [None,o,o,None],
-                                [None,o,o,None],
-                                [None,None,None,None],
-                                [None,None,None,None]
-                                
-                                ]
-                        elif o == 'RG':
-                            f = [
-                                [None,o,o,None],
-                                [o,o,None,None],
-                                [None,None,None,None],
-                                [None,None,None,None]
-                                ]
-                        elif o == 'RP':
-                            f = [
-                                [None,o,None,None],
-                                [o,o,o,None],
-                                [None,None,None,None],
-                                [None,None,None,None]
-                                ]
-                        elif o == 'RR':
-                            f = [
-                                [o,o,None,None],
-                                [None,o,o,None],
-                                [None,None,None,None],
-                                [None,None,None,None]
-                                ]
-        if self.held_shape:
-            self.transpose(self.held_shape)
-        else:
-            self.addpiece()
-        self.held_shape = f
+                                    ]
+                            elif o == 'RB':
+                                f = [
+                                    [o,None,None,None],
+                                    [o,o,o,None],
+                                    [None,None,None,None],
+                                    [None,None,None,None]
+                                    ]
+                            elif o == 'RO':
+                                f = [
+                                    [None,None,None,o],
+                                    [None,o,o,o],
+                                    [None,None,None,None],
+                                    [None,None,None,None]
+                                    ]
+                            elif o == 'RY':
+                                f = [
+                                    [None,o,o,None],
+                                    [None,o,o,None],
+                                    [None,None,None,None],
+                                    [None,None,None,None]
+                                    
+                                    ]
+                            elif o == 'RG':
+                                f = [
+                                    [None,o,o,None],
+                                    [o,o,None,None],
+                                    [None,None,None,None],
+                                    [None,None,None,None]
+                                    ]
+                            elif o == 'RP':
+                                f = [
+                                    [None,o,None,None],
+                                    [o,o,o,None],
+                                    [None,None,None,None],
+                                    [None,None,None,None]
+                                    ]
+                            elif o == 'RR':
+                                f = [
+                                    [o,o,None,None],
+                                    [None,o,o,None],
+                                    [None,None,None,None],
+                                    [None,None,None,None]
+                                    ]
+            if self.held_shape:
+                self.transpose(self.held_shape)
+            else:
+                self.addpiece()
+            self.held_shape = f
             
     def transpose_low(self,shape,x,y):
 		#puts shape in board
@@ -417,9 +421,18 @@ class Arrmanage():
                                 [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2]],
                                 [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2]]
                             ]
+                            if 'RO' in f[0] or 'RO' in f[1]:
+                                self.x-=1
+                                f=[
+                                [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2]],
+                                [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2]],
+                                [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2]]
+                            ]
                             f=self.rotate(f)
                             #places back on board
                             self.transpose_low(f,self.x,self.y)
+                            if 'RO' in f[0] or 'RO' in f[1]:
+                                self.x+=1
                             return
                         except:
                             return
