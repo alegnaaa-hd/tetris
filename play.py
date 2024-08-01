@@ -3,7 +3,6 @@ import button
 from pygame.locals import QUIT
 import os
 from game_over import game_over
-from copy import deepcopy
 
 
 def playy(arr):
