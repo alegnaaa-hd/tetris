@@ -12,7 +12,7 @@ def credits(arr):
   #Bigfont = pygame.font.SysFont("timesnewroman", 36)
   #font = pygame.font.SysFont("timesnewroman", 25)
 
-  font_path = 'Projects/tetris/fonts.ttf'
+  font_path = 'fonts.ttf'
 
   Big_game_font = pygame.font.Font(font_path, 40) 
   game_font = pygame.font.Font(font_path, 20)
@@ -67,7 +67,7 @@ def credits(arr):
   screen.blit(description4_text, (35, 560))
   
   # back button
-  back_img = pygame.image.load("Projects/tetris/buttons/button_back.png").convert_alpha()
+  back_img = pygame.image.load("button_back.png").convert_alpha()
   back_button = button.Button(290, 620, back_img, 0.25)
   back_button.draw(screen)
 
