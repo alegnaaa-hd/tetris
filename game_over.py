@@ -7,7 +7,7 @@ def game_over(score,highscore):
   from main import main_menu
   if (highscore) < score:
       resline = 'NEW HIGH SCORE!'
-      file = open('Projects/tetris/highscore.txt','w')
+      file = open('highscore.txt','w')
       file.write(str(score))
       file.close()
   elif (highscore) == score:
@@ -19,7 +19,7 @@ def game_over(score,highscore):
   screen = pygame.display.set_mode((880, 1000))
 
 
-  font_path = 'Projects/tetris/fonts.ttf'
+  font_path = 'fonts.ttf'
   font_size = 60
   BigFont = pygame.font.Font(font_path, font_size)
   SmallFont = pygame.font.Font(font_path, 30)
@@ -34,7 +34,7 @@ def game_over(score,highscore):
   screen.blit(game_over_text, (260, 210))
 
   # back button
-  back_img = pygame.image.load("Projects/tetris/buttons/button_back.png").convert_alpha()
+  back_img = pygame.image.load("button_back.png").convert_alpha()
   back_button = button.Button(290, 280, back_img, 0.25)
   back_button.draw(screen)
 
