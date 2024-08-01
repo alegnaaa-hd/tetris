@@ -20,8 +20,8 @@ def setting(arr):
     screen.blit(settings_text, (275, 60))
 
     # button images
-    resume_img = pygame.image.load("Projects/tetris/buttons/button_resume.png").convert_alpha()
-    back_img = pygame.image.load("Projects/tetris/buttons/button_back.png").convert_alpha()
+    resume_img = pygame.image.load("buttons/button_resume.png").convert_alpha()
+    back_img = pygame.image.load("buttons/button_back.png").convert_alpha()
     
     # button instances
     resume_button = button.Button(310, 450, resume_img, 0.25)
