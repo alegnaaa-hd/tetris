@@ -7,8 +7,7 @@ class Arrmanage():
     def __init__(self):
         #sound
         pygame.mixer.init() 
-        s='Projects/tetris/sound'
-        self.dropsound = pygame.mixer.Sound(os.path.join(s, 'dropsound.ogg'))
+        self.dropsound = pygame.mixer.Sound('dropsound.ogg')
         #int values
         self.score = 0
         self.level = 1
