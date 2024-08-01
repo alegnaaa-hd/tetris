@@ -3,9 +3,11 @@ import button
 from pygame.locals import QUIT
 import os
 from game_over import game_over
+from copy import deepcopy
 
 
 def playy(arr):
+
     from settings import setting
     # set variables 
     pygame.init()
@@ -18,6 +20,78 @@ def playy(arr):
         pygame.mixer.music.set_volume(0.5)
     screen = pygame.display.set_mode((880, 1000))
     
+    def movedown(arr2):
+		#checks that can move down
+        for x in range(10):
+            if arr2[19][x] in arr.colours:
+                return arr2,arr2
+        f = False
+        for i in range (19,-1,-1):
+            for j in range(10):
+                if arr2[i][j] in arr.colours and arr2[i+1][j] in arr.notcolours:
+                    return arr2,arr2
+		#moves down
+        if f == False:
+            for i in range (18,-1,-1):
+                for j in range(10):
+                    if arr2[i][j] in arr.colours:
+                        arr2[i+1][j] = arr2[i][j]
+                        arr2[i][j] = None
+            return True,arr2
+    def drop():
+		#continually moves down until stops moving
+        m=[]
+        for x in arr.arr:
+            p = []
+            for o in x:
+                p.append(o)
+            m.append(p)
+        f=True
+        while f == True:
+            f,m= movedown(m)
+        return f
+    def findpos(arr):
+        for m in arr.arr:
+            for l in m:
+                if l in arr.colours:
+                    if 'RY' in m:
+                        try:
+                            f=[
+                                [arr.arr[arr.y][arr.x],arr.arr[arr.y][arr.x+1]],
+                                [arr.arr[arr.y+1][arr.x],arr.arr[arr.y+1][arr.x+1]]
+                            ]
+                        except:
+                            return
+                    elif 'RA' in m:
+                        try:
+                            f=[
+                                [arr.arr[arr.y][arr.x],arr.arr[arr.y][arr.x+1],arr.arr[arr.y][arr.x+2],arr.arr[arr.y][arr.x+3]],
+                                [arr.arr[arr.y+1][arr.x],arr.arr[arr.y+1][arr.x+1],arr.arr[arr.y+1][arr.x+2],arr.arr[arr.y+1][arr.x+3]],
+                                [arr.arr[arr.y+2][arr.x],arr.arr[arr.y+2][arr.x+1],arr.arr[arr.y+2][arr.x+2],arr.arr[arr.y+2][arr.x+3]],
+                                [arr.arr[arr.y+3][arr.x],arr.arr[arr.y+3][arr.x+1],arr.arr[arr.y+3][arr.x+2],arr.arr[arr.y+3][arr.x+3]]
+                            ]
+                        except:
+                            return
+                    else:
+                        try:
+                            f=[
+                                [arr.arr[arr.y][arr.x],arr.arr[arr.y][arr.x+1],arr.arr[arr.y][arr.x+2]],
+                                [arr.arr[arr.y+1][arr.x],arr.arr[arr.y+1][arr.x+1],arr.arr[arr.y+1][arr.x+2]],
+                                [arr.arr[arr.y+2][arr.x],arr.arr[arr.y+2][arr.x+1],arr.arr[arr.y+2][arr.x+2]]
+                            ]
+                            #places back on board
+                        except:
+                            return
+        q = drop()
+        for x in range(len(q)):
+            for y in range (len(q[x])):
+                if q[x][y] in arr.colours:
+                    rect = pygame.Rect(260+y*35, 160+x*35, 35, 35)
+                    pygame.draw.rect(screen, 'grey74', rect)
+                    pygame.draw.rect(screen, 'grey', rect, 1)
+        
+
+                    
 
     def draw1(arr):
         font_path = 'Projects/tetris/fonts.ttf'
@@ -169,7 +243,6 @@ def playy(arr):
             elif event.type == pygame.MOUSEBUTTONDOWN:    
                 game_paused = False
                 x, y = pygame.mouse.get_pos()
-                print(f'{x}, {y}')
                 if x>20 and x<240:
                     if y >405 and y< 468:
                         setting(arr)
@@ -205,4 +278,5 @@ def playy(arr):
             i=0
         draw1(arr)
         drawGrid(arr.arr)
+        findpos(arr)
         pygame.display.update()
