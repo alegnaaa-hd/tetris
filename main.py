@@ -10,6 +10,8 @@ from tetrisarrmanagement import Arrmanage
 #credits()
 def main_menu(arr):
   pygame.init()
+  icon = pygame.image.load('Projects/tetris/logo.png')
+  pygame.display.set_icon(icon)
 
   screen = pygame.display.set_mode((880, 1000))
   pygame.display.set_caption("Data Structris")
