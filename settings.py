@@ -15,8 +15,10 @@ def setting(arr):
     pygame.display.set_caption("Menu")
 
     # font 
-    font = pygame.font.SysFont("timesnewroman", 36)
-    settings_text = font.render("PAUSED - Settings", True, "white")
+    font_path = 'fonts.ttf'
+    font_size = 40
+    game_font = pygame.font.Font(font_path, font_size) 
+    settings_text = game_font.render("PAUSED - Settings", True, "white")
     screen.blit(settings_text, (275, 60))
 
     # button images
@@ -35,7 +37,7 @@ def setting(arr):
     slider.value=int((pygame.mixer.music.get_volume())*100)
     output = TextBox(screen, 430, 300, 55, 50, fontSize=30, )
     
-    music_text = font.render("Music", True, "white")
+    music_text = game_font.render("Music", True, "white")
     screen.blit(music_text, (385, 135))
     
     output.disable() # disable textbox, make it a label
