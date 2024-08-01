@@ -94,6 +94,7 @@ def playy(arr):
                     
 
     def draw1(arr):
+        screen.fill('black')
         font_path = 'Projects/tetris/fonts.ttf'
         font_size = 32
         game_font = pygame.font.Font(font_path, font_size) 
@@ -135,7 +136,7 @@ def playy(arr):
         text_cleared = game_font.render("Cleared", True, "black")
         screen.blit(text_cleared, (660, 390))
         
-        linesCleared_text = game_font.render(f'{arr.lines}', True, "purple")
+        linesCleared_text = game_font.render(f'{arr.totallines}', True, "purple")
         screen.blit(linesCleared_text, (730, 435))
         
         # /////////////// right bottom - level and score ///////////////
