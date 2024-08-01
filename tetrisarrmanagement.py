@@ -421,18 +421,9 @@ class Arrmanage():
                                 [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2]],
                                 [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2]]
                             ]
-                            if 'RO' in f[0] or 'RO' in f[1]:
-                                self.x-=1
-                                f=[
-                                [self.arr[self.y][self.x],self.arr[self.y][self.x+1],self.arr[self.y][self.x+2]],
-                                [self.arr[self.y+1][self.x],self.arr[self.y+1][self.x+1],self.arr[self.y+1][self.x+2]],
-                                [self.arr[self.y+2][self.x],self.arr[self.y+2][self.x+1],self.arr[self.y+2][self.x+2]]
-                            ]
                             f=self.rotate(f)
                             #places back on board
                             self.transpose_low(f,self.x,self.y)
-                            if 'RO' in f[0] or 'RO' in f[1]:
-                                self.x+=1
                             return
                         except:
                             return
