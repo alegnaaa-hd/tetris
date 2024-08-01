@@ -49,37 +49,6 @@ def playy(arr):
             f,m= movedown(m)
         return f
     def findpos(arr):
-        for m in arr.arr:
-            for l in m:
-                if l in arr.colours:
-                    if 'RY' in m:
-                        try:
-                            f=[
-                                [arr.arr[arr.y][arr.x],arr.arr[arr.y][arr.x+1]],
-                                [arr.arr[arr.y+1][arr.x],arr.arr[arr.y+1][arr.x+1]]
-                            ]
-                        except:
-                            return
-                    elif 'RA' in m:
-                        try:
-                            f=[
-                                [arr.arr[arr.y][arr.x],arr.arr[arr.y][arr.x+1],arr.arr[arr.y][arr.x+2],arr.arr[arr.y][arr.x+3]],
-                                [arr.arr[arr.y+1][arr.x],arr.arr[arr.y+1][arr.x+1],arr.arr[arr.y+1][arr.x+2],arr.arr[arr.y+1][arr.x+3]],
-                                [arr.arr[arr.y+2][arr.x],arr.arr[arr.y+2][arr.x+1],arr.arr[arr.y+2][arr.x+2],arr.arr[arr.y+2][arr.x+3]],
-                                [arr.arr[arr.y+3][arr.x],arr.arr[arr.y+3][arr.x+1],arr.arr[arr.y+3][arr.x+2],arr.arr[arr.y+3][arr.x+3]]
-                            ]
-                        except:
-                            return
-                    else:
-                        try:
-                            f=[
-                                [arr.arr[arr.y][arr.x],arr.arr[arr.y][arr.x+1],arr.arr[arr.y][arr.x+2]],
-                                [arr.arr[arr.y+1][arr.x],arr.arr[arr.y+1][arr.x+1],arr.arr[arr.y+1][arr.x+2]],
-                                [arr.arr[arr.y+2][arr.x],arr.arr[arr.y+2][arr.x+1],arr.arr[arr.y+2][arr.x+2]]
-                            ]
-                            #places back on board
-                        except:
-                            return
         q = drop()
         for x in range(len(q)):
             for y in range (len(q[x])):
