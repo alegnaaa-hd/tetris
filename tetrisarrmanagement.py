@@ -282,11 +282,12 @@ class Arrmanage():
         try:
             for i in range(len(shape)):
                 for p in range(len(shape)):
-                    if self.arr[y+p][i+x] in self.notcolours and shape[p][i] in self.colours:
+                    if self.arr[y+p][i+x] in self.colours and shape[p][i] in self.notcolours or shape[p][i] in self.colours and i+x < 0:
                         return
+            for m in range(len(shape)):
                 for l in range(len(shape)):
-                    if self.arr[y+l][i+x] not in self.notcolours:
-                        self.arr[y+l][x+i] = shape[l][i]
+                    if self.arr[y+l][m+x] not in self.notcolours:
+                        self.arr[y+l][x+m] = shape[l][m]
         except:
             return
 	
