@@ -23,14 +23,14 @@ def main_menu(arr):
 
   #play button on menu screen
   
-  play_img = pygame.image.load("button_play.png").convert_alpha()
+  play_img = pygame.image.load("buttons/button_play.png").convert_alpha()
 
   play_button = button.Button(290, 250, play_img, 0.25)
 
   play_button.draw(screen)
 
   #credits button on menu screen
-  credits_img = pygame.image.load("button_credits.png").convert_alpha()
+  credits_img = pygame.image.load("buttons/button_credits.png").convert_alpha()
 
   credits_button = button.Button(290, 350, credits_img, 0.25)
 
@@ -38,7 +38,7 @@ def main_menu(arr):
 
   #settings button on menu screen
 
-  settings_img = pygame.image.load("button_settings.png").convert_alpha()
+  settings_img = pygame.image.load("buttons/button_settings.png").convert_alpha()
 
   settings_button = button.Button(290, 450, settings_img, 0.25)
 
