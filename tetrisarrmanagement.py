@@ -238,10 +238,9 @@ class Arrmanage():
                                     ]
                             elif o == 'RO':
                                 f = [
-                                    [None,None,None,o],
-                                    [None,o,o,o],
-                                    [None,None,None,None],
-                                    [None,None,None,None]
+                                    [None,None,o],
+                                    [o,o,o],
+                                    [None,None,None]
                                     ]
                             elif o == 'RY':
                                 f = [
