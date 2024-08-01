@@ -67,7 +67,7 @@ def credits(arr):
   screen.blit(description4_text, (35, 560))
   
   # back button
-  back_img = pygame.image.load("button_back.png").convert_alpha()
+  back_img = pygame.image.load("buttons/button_back.png").convert_alpha()
   back_button = button.Button(290, 620, back_img, 0.25)
   back_button.draw(screen)
 
