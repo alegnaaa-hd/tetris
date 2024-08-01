@@ -34,7 +34,7 @@ def game_over(score,highscore):
   screen.blit(game_over_text, (260, 210))
 
   # back button
-  back_img = pygame.image.load("button_back.png").convert_alpha()
+  back_img = pygame.image.load("buttons/button_back.png").convert_alpha()
   back_button = button.Button(290, 280, back_img, 0.25)
   back_button.draw(screen)
 
