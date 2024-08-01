@@ -10,7 +10,7 @@ from tetrisarrmanagement import Arrmanage
 #credits()
 def main_menu(arr):
   pygame.init()
-  icon = pygame.image.load('Projects/tetris/logo.png')
+  icon = pygame.image.load('logo.png')
   pygame.display.set_icon(icon)
 
   screen = pygame.display.set_mode((880, 1000))
