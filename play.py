@@ -84,7 +84,7 @@ def playy(arr):
         q = drop()
         for x in range(len(q)):
             for y in range (len(q[x])):
-                if q[x][y] in arr.colours:
+                if q[x][y] in arr.colours and arr.arr[x][y] not in arr.colours:
                     rect = pygame.Rect(260+y*35, 160+x*35, 35, 35)
                     pygame.draw.rect(screen, 'grey74', rect)
                     pygame.draw.rect(screen, 'grey', rect, 1)
@@ -257,18 +257,27 @@ def playy(arr):
                     arr.moveleft()
                 elif f == pygame.K_DOWN:
                     if arr.soft_drop() == 'DEAD':
-                        game_over()
+                        file = open('Projects/tetris/highscore.txt','r')
+                        line = file.readline()
+                        file.close()
+                        game_over(arr.score,int(line))
                 elif f == pygame.K_UP:
                     arr.rotate_on_board()
                 elif f == pygame.K_SPACE:
                     if arr.drop() == 'DEAD':
-                        game_over()
+                        file = open('Projects/tetris/highscore.txt','r')
+                        line = file.readline()
+                        file.close()
+                        game_over(arr.score,int(line))
                 elif f == pygame.K_c:
                     arr.arr_hold()
 
-        if i == 500-10*speed:
+        if i == 500-12*speed:
             if arr.movedown() == 'DEAD':
-                game_over()
+                file = open('Projects/tetris/highscore.txt','r')
+                line = file.readline()
+                file.close()
+                game_over(arr.score,int(line))
             if arr.lines >= 10:
                 arr.totallines += arr.lines
                 arr.lines = 0
