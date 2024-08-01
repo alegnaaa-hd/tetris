@@ -13,8 +13,7 @@ def playy(arr):
     pygame.mixer.init()
     DISPLAYSURF = pygame.display.set_mode((300, 300))
     pygame.display.set_caption('Data Structris')
-    s='Projects/tetris/sound'
-    backgroundmusic = pygame.mixer.music.load(os.path.join(s,'backgroundmusic2.wav'))
+    backgroundmusic = pygame.mixer.music.load('backgroundmusic2.ogg')
     if pygame.mixer.music.get_volume() > 99 and pygame.mixer.music.get_volume < 100:
         pygame.mixer.music.set_volume(0.5)
     screen = pygame.display.set_mode((880, 1000))
@@ -94,7 +93,7 @@ def playy(arr):
 
     def draw1(arr):
         screen.fill('black')
-        font_path = 'Projects/tetris/fonts.ttf'
+        font_path = 'fonts.ttf'
         font_size = 32
         game_font = pygame.font.Font(font_path, font_size) 
         # ///////////////////// BANNER /////////////////////
@@ -111,19 +110,19 @@ def playy(arr):
             for o in x:
                 if o in arr.colours:
                     if o == 'RA':
-                        f = pygame.image.load('Projects/tetris/pieces/aqua.png')
+                        f = pygame.image.load('pieces/aqua.png')
                     elif o == 'RB':
-                        f = pygame.image.load('Projects/tetris/pieces/blue.png')
+                        f = pygame.image.load('pieces/blue.png')
                     elif o == 'RO':
-                        f = pygame.image.load('Projects/tetris/pieces/orange.png')
+                        f = pygame.image.load('pieces/orange.png')
                     elif o == 'RY':
-                        f = pygame.image.load('Projects/tetris/pieces/yellow.png')
+                        f = pygame.image.load('pieces/yellow.png')
                     elif o == 'RG':
-                        f = pygame.image.load('Projects/tetris/pieces/green.png')
+                        f = pygame.image.load('pieces/green.png')
                     elif o == 'RP':
-                        f = pygame.image.load('Projects/tetris/pieces/purple.png')
+                        f = pygame.image.load('pieces/purple.png')
                     elif o == 'RR':
-                        f = pygame.image.load('Projects/tetris/pieces/red.png')
+                        f = pygame.image.load('pieces/red.png')
         if f:
             screen.blit(f,(650,210))
         
@@ -170,19 +169,19 @@ def playy(arr):
             for o in x:
                 if o in arr.colours:
                     if o == 'RA':
-                        f = pygame.image.load('Projects/tetris/pieces/aqua.png')
+                        f = pygame.image.load('pieces/aqua.png')
                     elif o == 'RB':
-                        f = pygame.image.load('Projects/tetris/pieces/blue.png')
+                        f = pygame.image.load('pieces/blue.png')
                     elif o == 'RO':
-                        f = pygame.image.load('Projects/tetris/pieces/orange.png')
+                        f = pygame.image.load('pieces/orange.png')
                     elif o == 'RY':
-                        f = pygame.image.load('Projects/tetris/pieces/yellow.png')
+                        f = pygame.image.load('pieces/yellow.png')
                     elif o == 'RG':
-                        f = pygame.image.load('Projects/tetris/pieces/green.png')
+                        f = pygame.image.load('pieces/green.png')
                     elif o == 'RP':
-                        f = pygame.image.load('Projects/tetris/pieces/purple.png')
+                        f = pygame.image.load('pieces/purple.png')
                     elif o == 'RR':
-                        f = pygame.image.load('Projects/tetris/pieces/red.png')
+                        f = pygame.image.load('pieces/red.png')
         if f:
             screen.blit(f,(50,210))
         
@@ -190,7 +189,7 @@ def playy(arr):
         pygame.draw.rect(screen, "black", pygame.Rect(260, 160, 350, 700))
         
         # //////////////////// settings button ////////////////////
-        setting_img = pygame.image.load("Projects/tetris/buttons/button_settings.png").convert_alpha()
+        setting_img = pygame.image.load("buttons/button_settings.png").convert_alpha()
 
         setting_button = button.Button(14, 400, setting_img, 0.2)
 
@@ -257,7 +256,7 @@ def playy(arr):
                     arr.moveleft()
                 elif f == pygame.K_DOWN:
                     if arr.soft_drop() == 'DEAD':
-                        file = open('Projects/tetris/highscore.txt','r')
+                        file = open('highscore.txt','r')
                         line = file.readline()
                         file.close()
                         game_over(arr.score,int(line))
@@ -265,7 +264,7 @@ def playy(arr):
                     arr.rotate_on_board()
                 elif f == pygame.K_SPACE:
                     if arr.drop() == 'DEAD':
-                        file = open('Projects/tetris/highscore.txt','r')
+                        file = open('highscore.txt','r')
                         line = file.readline()
                         file.close()
                         game_over(arr.score,int(line))
@@ -274,7 +273,7 @@ def playy(arr):
 
         if i == 500-12*speed:
             if arr.movedown() == 'DEAD':
-                file = open('Projects/tetris/highscore.txt','r')
+                file = open('highscore.txt','r')
                 line = file.readline()
                 file.close()
                 game_over(arr.score,int(line))
